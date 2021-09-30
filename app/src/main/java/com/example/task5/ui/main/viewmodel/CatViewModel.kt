@@ -5,11 +5,11 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.task5.api.data.Cat
-import com.example.task5.di.locateLazy
 import com.example.task5.datasource.CatPagingRepository
+import com.example.task5.di.locateLazy
 import kotlinx.coroutines.flow.Flow
 
-class MainViewModel() : ViewModel() {
+class CatViewModel() : ViewModel() {
 
     private val repository: CatPagingRepository by locateLazy()
 

@@ -7,43 +7,41 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.example.task5.databinding.FragmentMainBinding
-import com.example.task5.ui.main.viewmodel.MainViewModel
+import com.example.task5.databinding.FragmentCatListBinding
+import com.example.task5.ui.main.viewmodel.CatViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class MainFragment : Fragment() {
+class CatListFragment : Fragment() {
 
-    private var _binding: FragmentMainBinding? = null
+    private var _binding: FragmentCatListBinding? = null
 
     private val binding get() = requireNotNull(_binding)
 
     private var searchJob: Job? = null
 
-    private val adapter = CatAdapter()
+    private val catAdapter = CatAdapter()
 
-    private val mainViewModel: MainViewModel by activityViewModels()
+    private val catViewModel: CatViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentMainBinding.inflate(inflater, container, false)
+        _binding = FragmentCatListBinding.inflate(inflater, container, false)
 
         with(binding) {
-//            catList.layoutManager = LinearLayoutManager(context)
             catList.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-            catList.adapter = adapter
+            catList.adapter = catAdapter
         }
 
         searchJob?.cancel()
         searchJob = lifecycleScope.launch {
-            mainViewModel.searchImages().collectLatest {
-                adapter.submitData(it)
+            catViewModel.searchImages().collectLatest {
+                catAdapter.submitData(it)
             }
         }
 
@@ -56,6 +54,6 @@ class MainFragment : Fragment() {
     }
 
     companion object {
-        fun newInstance() = MainFragment()
+        fun create() = CatListFragment()
     }
 }

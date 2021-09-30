@@ -75,6 +75,7 @@ dependencies {
     implementation("com.squareup.moshi:moshi:1.12.0")
     kapt("com.squareup.moshi:moshi-kotlin-codegen:1.12.0")
     implementation("io.coil-kt:coil:1.3.2")
+    implementation("io.coil-kt:coil-gif:1.3.2")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
 }

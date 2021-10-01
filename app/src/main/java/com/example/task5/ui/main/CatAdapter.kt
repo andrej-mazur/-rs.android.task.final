@@ -6,10 +6,11 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.example.task5.R
 import com.example.task5.api.data.Cat
 import com.example.task5.databinding.CatItemBinding
 
-class CatAdapter : PagingDataAdapter<Cat, CatViewHolder>(CatDiffCallback()) {
+class CatAdapter(private val listener: CatAdapterListener) : PagingDataAdapter<Cat, CatViewHolder>(CatDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CatViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -20,7 +21,7 @@ class CatAdapter : PagingDataAdapter<Cat, CatViewHolder>(CatDiffCallback()) {
     override fun onBindViewHolder(holder: CatViewHolder, position: Int) {
         val cat = getItem(position)
         if (cat != null) {
-            holder.bind(cat)
+            holder.bind(cat, listener)
         }
     }
 }
@@ -29,10 +30,15 @@ class CatViewHolder(
     private val binding: CatItemBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(cat: Cat) {
+    fun bind(cat: Cat, listener: CatAdapterListener) {
         with(binding) {
-            image.load(cat.url)
+            image.load(cat.url) {
+                placeholder(R.drawable.ic_placeholder)
+            }
             description.text = "${cat.width}x${cat.height}"
+        }
+        itemView.setOnClickListener {
+            listener.onClick(cat)
         }
     }
 }
@@ -46,4 +52,9 @@ class CatDiffCallback : DiffUtil.ItemCallback<Cat>() {
     override fun areContentsTheSame(oldItem: Cat, newItem: Cat): Boolean {
         return oldItem == newItem
     }
+}
+
+interface CatAdapterListener {
+
+    fun onClick(cat: Cat)
 }

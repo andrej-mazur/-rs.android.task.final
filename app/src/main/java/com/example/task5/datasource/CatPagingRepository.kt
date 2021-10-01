@@ -11,7 +11,7 @@ class CatPagingRepository(
     private val service: CatService
 ) {
 
-    fun searchStream(): Flow<PagingData<Cat>> {
+    fun getCatPageFlow(): Flow<PagingData<Cat>> {
         return Pager(
             config = PagingConfig(enablePlaceholders = false, pageSize = Pagination.DEFAULT_PAGE_SIZE),
             pagingSourceFactory = { CatPagingSource(service) }

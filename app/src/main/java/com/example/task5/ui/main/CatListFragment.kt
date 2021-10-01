@@ -7,7 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import androidx.navigation.fragment.findNavController
+import com.example.task5.api.data.Cat
 import com.example.task5.databinding.FragmentCatListBinding
 import com.example.task5.ui.main.viewmodel.CatViewModel
 import kotlinx.coroutines.Job
@@ -20,11 +21,18 @@ class CatListFragment : Fragment() {
 
     private val binding get() = requireNotNull(_binding)
 
+    private val viewModel: CatViewModel by activityViewModels()
+
     private var searchJob: Job? = null
 
-    private val catAdapter = CatAdapter()
+    private val catAdapter = CatAdapter(object : CatAdapterListener {
 
-    private val catViewModel: CatViewModel by activityViewModels()
+        override fun onClick(cat: Cat) {
+            viewModel.updateCatFlow(cat)
+            val direction = CatListFragmentDirections.actionListToSingle()
+            findNavController().navigate(direction)
+        }
+    })
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,13 +42,12 @@ class CatListFragment : Fragment() {
         _binding = FragmentCatListBinding.inflate(inflater, container, false)
 
         with(binding) {
-            catList.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
             catList.adapter = catAdapter
         }
 
         searchJob?.cancel()
         searchJob = lifecycleScope.launch {
-            catViewModel.searchImages().collectLatest {
+            viewModel.catPageFlow.collectLatest {
                 catAdapter.submitData(it)
             }
         }
@@ -51,9 +58,5 @@ class CatListFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    companion object {
-        fun create() = CatListFragment()
     }
 }

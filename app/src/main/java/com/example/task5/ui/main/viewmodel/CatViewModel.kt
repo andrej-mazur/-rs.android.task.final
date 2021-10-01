@@ -8,16 +8,22 @@ import com.example.task5.api.data.Cat
 import com.example.task5.datasource.CatPagingRepository
 import com.example.task5.di.locateLazy
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
-class CatViewModel() : ViewModel() {
+class CatViewModel : ViewModel() {
 
     private val repository: CatPagingRepository by locateLazy()
 
-    private var currentSearchResult: Flow<PagingData<Cat>>? = null
+    private val _catPageFlow = repository.getCatPageFlow()
 
-    fun searchImages(): Flow<PagingData<Cat>> {
-        val newResult = repository.searchStream().cachedIn(viewModelScope)
-        currentSearchResult = newResult
-        return newResult
+    val catPageFlow: Flow<PagingData<Cat>> = _catPageFlow.cachedIn(viewModelScope)
+
+    private val _catFlow = MutableStateFlow<Cat?>(null)
+
+    val catFlow: StateFlow<Cat?> = _catFlow
+
+    fun updateCatFlow(cat: Cat) {
+        _catFlow.tryEmit(cat)
     }
 }

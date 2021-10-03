@@ -1,7 +1,6 @@
 package com.example.task5.ui.main
 
 import android.content.ContentValues
-import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -17,12 +16,13 @@ import coil.load
 import com.example.task5.R
 import com.example.task5.api.data.Cat
 import com.example.task5.databinding.FragmentCatBinding
-import com.example.task5.di.ServiceLocator
 import com.example.task5.ui.main.viewmodel.CatViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import okhttp3.*
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import okio.IOException
 
 
@@ -56,7 +56,14 @@ class CatFragment : Fragment() {
 
         binding.fab.setOnClickListener {
             viewModel.catFlow.value?.let { cat ->
-                downloadImage(cat)
+                try {
+                    lifecycleScope.launch(Dispatchers.IO) {
+                        downloadImage(cat)
+                    }
+                    Toast.makeText(requireContext(), "Saved", Toast.LENGTH_SHORT).show()
+                } catch (e: IOException) {
+                    Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
+                }
             }
         }
 
@@ -64,51 +71,36 @@ class CatFragment : Fragment() {
     }
 
     private fun downloadImage(cat: Cat) {
-        val context = ServiceLocator.locate<Context>()// TODO вынести
         val client = OkHttpClient.Builder().build()
         val request = Request.Builder().url(cat.url).build()
-        client.newCall(request).enqueue(object : Callback {
-            override fun onResponse(call: Call, response: Response) {
-                val data = response.body?.byteStream()
-                if (data != null) {
-                    try {
-                        val fileName = getFileName(cat.url)
-                        val fileMimeType = getFileMimeType(cat.url)
-                        val fileMediaStoreUri = run {
-                            val imageCollection =
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                                    MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
-                                } else {
-                                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-                                }
-                            val image = ContentValues().apply {
-                                put(MediaStore.Images.Media.DISPLAY_NAME, fileName)
-                                put(MediaStore.Images.Media.MIME_TYPE, fileMimeType)
-                            }
-                            requireActivity().contentResolver.insert(imageCollection, image)
-                        } ?: throw IOException()
 
-                        context.contentResolver.openOutputStream(fileMediaStoreUri).use { outputStream ->
-                            outputStream?.write(data.readBytes())
+        client.newCall(request).execute().use { response ->
+            if (!response.isSuccessful) {
+                throw IOException()
+            }
+            val data = response.body?.byteStream()
+            if (data != null) {
+                val fileName = getFileName(cat.url)
+                val fileMimeType = getFileMimeType(cat.url)
+                val fileMediaStoreUri = run {
+                    val imageCollection =
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                            MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
+                        } else {
+                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI
                         }
-
-                        requireActivity().runOnUiThread {
-                            Toast.makeText(requireContext(), "Saved", Toast.LENGTH_SHORT).show()
-                        }
-                    } catch (e: Exception) {
-                        requireActivity().runOnUiThread {
-                            Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
-                        }
+                    val image = ContentValues().apply {
+                        put(MediaStore.Images.Media.DISPLAY_NAME, fileName)
+                        put(MediaStore.Images.Media.MIME_TYPE, fileMimeType)
                     }
-                }
-            }
+                    requireActivity().contentResolver.insert(imageCollection, image)
+                } ?: throw IOException()
 
-            override fun onFailure(call: Call, e: IOException) {
-                requireActivity().runOnUiThread {
-                    Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
+                requireActivity().contentResolver.openOutputStream(fileMediaStoreUri).use { outputStream ->
+                    outputStream?.write(data.readBytes())
                 }
             }
-        })
+        }
     }
 
     private fun getFileName(url: String): String {

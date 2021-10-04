@@ -63,29 +63,29 @@ android {
 }
 
 dependencies {
-    implementation("androidx.appcompat:appcompat:1.3.1")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.1")
-    implementation("androidx.core:core-ktx:1.6.0")
-    implementation("androidx.fragment:fragment-ktx:1.3.6")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.3.1")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1")
-    implementation("androidx.navigation:navigation-fragment-ktx:2.3.5")
-    implementation("androidx.navigation:navigation-ui-ktx:2.3.5")
-    implementation("androidx.paging:paging-runtime-ktx:3.0.1")
-    implementation("com.google.android.material:material:1.4.0")
-    implementation("com.squareup.okhttp3:okhttp:4.9.1")
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
-    implementation("com.squareup.moshi:moshi:1.12.0")
-    kapt("com.squareup.moshi:moshi-kotlin-codegen:1.12.0")
-    implementation("io.coil-kt:coil:1.3.2")
-    implementation("io.coil-kt:coil-gif:1.3.2")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
+    implementation(Libraries.appcompat)
+    implementation(Libraries.constraintlayout)
+    implementation(Libraries.coreKtx)
+    implementation(Libraries.fragmentKtx)
+    implementation(Libraries.lifecycleLivedataKtx)
+    implementation(Libraries.lifecycleViewmodelKtx)
+    implementation(Libraries.navigationFragmentKtx)
+    implementation(Libraries.navigationUiKtx)
+    implementation(Libraries.pagingRuntimeKtx)
+    implementation(Libraries.material)
+    implementation(Libraries.okhttp)
+    implementation(Libraries.retrofit)
+    implementation(Libraries.retrofitConverterMoshi)
+    implementation(Libraries.moshi)
+    kapt(Libraries.moshiCodegen)
+    implementation(Libraries.coil)
+    implementation(Libraries.coilGif)
+    implementation(Libraries.coroutinesAndroid)
+    implementation(Libraries.coroutinesCore)
 }
 
 tasks.withType<Detekt>().configureEach {
-    jvmTarget = "1.8"
+    jvmTarget = JavaVersion.VERSION_1_8.toString()
 }
 
 configure<KtlintExtension> {

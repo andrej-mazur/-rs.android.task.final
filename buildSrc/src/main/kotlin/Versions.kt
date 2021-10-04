@@ -1,0 +1,15 @@
+object Versions {
+    val appcompat = "1.3.1"
+    val constraintlayout = "2.1.1"
+    val coreKtx = "1.6.0"
+    val fragmentKtx = "1.3.6"
+    val lifecycle = "2.3.1"
+    val navigation = "2.3.5"
+    val pagingRuntimeKtx = "3.0.1"
+    val material = "1.4.0"
+    val okhttp = "4.9.1"
+    val retrofit = "2.9.0"
+    val moshi = "1.12.0"
+    val coil = "1.3.2"
+    val coroutines = "1.5.2"
+}

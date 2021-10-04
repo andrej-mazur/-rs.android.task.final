@@ -19,8 +19,7 @@ class CatAdapter(private val listener: CatAdapterListener) : PagingDataAdapter<C
     }
 
     override fun onBindViewHolder(holder: CatViewHolder, position: Int) {
-        val cat = getItem(position)
-        if (cat != null) {
+        getItem(position)?.let { cat ->
             holder.bind(cat, listener)
         }
     }

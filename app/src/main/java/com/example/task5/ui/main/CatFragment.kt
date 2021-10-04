@@ -25,7 +25,6 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okio.IOException
 
-
 class CatFragment : Fragment() {
 
     private var _binding: FragmentCatBinding? = null
@@ -61,7 +60,7 @@ class CatFragment : Fragment() {
                         downloadImage(cat)
                     }
                     Toast.makeText(requireContext(), "Saved", Toast.LENGTH_SHORT).show()
-                } catch (e: IOException) {
+                } catch (_: IOException) {
                     Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
                 }
             }
@@ -75,29 +74,29 @@ class CatFragment : Fragment() {
         val request = Request.Builder().url(cat.url).build()
 
         client.newCall(request).execute().use { response ->
-            if (!response.isSuccessful) {
+            if (!response.isSuccessful || response.body == null) {
                 throw IOException()
             }
-            val data = response.body?.byteStream()
-            if (data != null) {
-                val fileName = getFileName(cat.url)
-                val fileMimeType = getFileMimeType(cat.url)
-                val fileMediaStoreUri = run {
-                    val imageCollection =
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                            MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
-                        } else {
-                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-                        }
-                    val image = ContentValues().apply {
-                        put(MediaStore.Images.Media.DISPLAY_NAME, fileName)
-                        put(MediaStore.Images.Media.MIME_TYPE, fileMimeType)
-                    }
-                    requireActivity().contentResolver.insert(imageCollection, image)
-                } ?: throw IOException()
 
+            val fileName = getFileName(cat.url)
+            val fileMimeType = getFileMimeType(cat.url)
+            val fileMediaStoreUri = run {
+                val imageCollection =
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                        MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
+                    } else {
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                    }
+                val image = ContentValues().apply {
+                    put(MediaStore.Images.Media.DISPLAY_NAME, fileName)
+                    put(MediaStore.Images.Media.MIME_TYPE, fileMimeType)
+                }
+                requireActivity().contentResolver.insert(imageCollection, image)
+            } ?: throw IOException()
+
+            response.body?.let {
                 requireActivity().contentResolver.openOutputStream(fileMediaStoreUri).use { outputStream ->
-                    outputStream?.write(data.readBytes())
+                    outputStream?.write(it.byteStream().readBytes())
                 }
             }
         }

@@ -1,7 +1,7 @@
 import io.gitlab.arturbosch.detekt.Detekt
-import java.io.FileInputStream
-import java.util.*
 import org.jlleitschuh.gradle.ktlint.KtlintExtension
+import java.io.FileInputStream
+import java.util.Properties
 
 plugins {
     id("com.android.application")

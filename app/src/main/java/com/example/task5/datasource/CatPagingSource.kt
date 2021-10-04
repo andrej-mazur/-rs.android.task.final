@@ -22,9 +22,9 @@ class CatPagingSource(
                 nextKey = if (pageNumber >= response.count / response.limit) null else pageNumber + 1
             )
         } catch (e: IOException) {
-            return LoadResult.Error(e)
+            LoadResult.Error(e)
         } catch (e: HttpException) {
-            return LoadResult.Error(e)
+            LoadResult.Error(e)
         }
     }
 

@@ -34,7 +34,7 @@ class CatViewHolder(
             image.load(cat.url) {
                 placeholder(R.drawable.ic_placeholder)
             }
-            description.text = "${cat.width}x${cat.height}"
+            description.text = root.resources.getString(R.string.image_description, cat.width, cat.height)
         }
         itemView.setOnClickListener {
             listener.onClick(cat)

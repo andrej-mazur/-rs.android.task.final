@@ -28,7 +28,7 @@ class CatService(
 
                 CatResponse(cats, responseCount, responseLimit, responsePage)
             } else {
-                CatResponse(emptyList(), 0, Pagination.DEFAULT_PAGE_SIZE, Pagination.DEFAULT_PAGE_NUMBER)
+                CatResponse(emptyList(), 0, pageSize, pageNumber)
             }
         }
     }

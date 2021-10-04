@@ -15,6 +15,7 @@ import com.example.task5.datasource.CatService
 import com.example.task5.di.ServiceLocator
 import okhttp3.OkHttpClient
 
+@Suppress("unused")
 class App : Application(), ImageLoaderFactory {
 
     override fun onCreate() {

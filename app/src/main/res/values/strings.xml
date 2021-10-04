@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Task5</string>
+    <string name="image_description">%dx%d</string>
 </resources>

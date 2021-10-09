@@ -41,17 +41,11 @@ class CatFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCatBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-        searchJob?.cancel()
-        searchJob = lifecycleScope.launch {
-            viewModel.catFlow.collectLatest { cat ->
-                if (cat != null) {
-                    binding.image.load(cat.url) {
-                        placeholder(R.drawable.ic_placeholder)
-                    }
-                }
-            }
-        }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         binding.fab.setOnClickListener {
             viewModel.catFlow.value?.let { cat ->
@@ -66,7 +60,16 @@ class CatFragment : Fragment() {
             }
         }
 
-        return binding.root
+        searchJob?.cancel()
+        searchJob = lifecycleScope.launch {
+            viewModel.catFlow.collectLatest { cat ->
+                if (cat != null) {
+                    binding.image.load(cat.url) {
+                        placeholder(R.drawable.ic_placeholder)
+                    }
+                }
+            }
+        }
     }
 
     private fun downloadImage(cat: Cat) {

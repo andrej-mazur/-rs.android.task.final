@@ -40,6 +40,11 @@ class CatListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCatListBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
             catList.adapter = catAdapter
@@ -51,8 +56,6 @@ class CatListFragment : Fragment() {
                 catAdapter.submitData(it)
             }
         }
-
-        return binding.root
     }
 
     override fun onDestroyView() {

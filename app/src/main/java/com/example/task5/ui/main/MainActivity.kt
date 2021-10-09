@@ -8,13 +8,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.task5.R
-import com.example.task5.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-
-    private var _binding: ActivityMainBinding? = null
-
-    private val binding get() = requireNotNull(_binding)
 
     private var _navController: NavController? = null
 
@@ -26,16 +21,17 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        _binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        _navController = (supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment).navController
-        _appBarConfiguration = AppBarConfiguration(navController.graph)
-        setupActionBarWithNavController(navController, appBarConfiguration)
+        setContentView(R.layout.activity_main)
+        initNavigation()
     }
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    private fun initNavigation() {
+        _navController = (supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment).navController
+        _appBarConfiguration = AppBarConfiguration(navController.graph)
+        setupActionBarWithNavController(navController, appBarConfiguration)
     }
 }

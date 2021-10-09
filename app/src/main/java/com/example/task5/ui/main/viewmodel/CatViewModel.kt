@@ -10,6 +10,7 @@ import com.example.task5.di.locateLazy
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 class CatViewModel : ViewModel() {
 
@@ -21,7 +22,7 @@ class CatViewModel : ViewModel() {
 
     private val _catFlow = MutableStateFlow<Cat?>(null)
 
-    val catFlow: StateFlow<Cat?> = _catFlow
+    val catFlow: StateFlow<Cat?> = _catFlow.asStateFlow()
 
     fun updateCatFlow(cat: Cat) {
         _catFlow.tryEmit(cat)

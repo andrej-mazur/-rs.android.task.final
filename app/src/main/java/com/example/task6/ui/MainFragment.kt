@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.example.task6.catalog.TrackListing
+import com.example.task6.data.TrackListing
 import com.example.task6.databinding.MainFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject

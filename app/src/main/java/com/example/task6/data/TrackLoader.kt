@@ -1,7 +1,6 @@
-package com.example.task6.loader
+package com.example.task6.data
 
 import android.content.res.AssetManager
-import com.example.task6.data.Track
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types

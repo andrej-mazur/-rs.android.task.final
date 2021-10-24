@@ -1,4 +1,4 @@
-package com.plcoding.spotifycloneyt.di
+package com.example.task6.di
 
 import android.content.Context
 import android.content.res.AssetManager

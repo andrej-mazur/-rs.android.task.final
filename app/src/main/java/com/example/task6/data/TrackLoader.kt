@@ -17,7 +17,9 @@ class TrackLoader @Inject constructor(
         val type = Types.newParameterizedType(List::class.java, Track::class.java)
         val adapter: JsonAdapter<List<Track>> = moshi.adapter(type)
         val jsonText = assetManager.open(FILE_NAME).bufferedReader().use { it.readText() }
-        return adapter.fromJson(jsonText)
+        return adapter.fromJson(jsonText)?.also {
+            it.forEachIndexed { index, track -> track.mediaId = "$index" }
+        }
     }
 
     companion object {

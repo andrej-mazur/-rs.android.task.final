@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.task6.data.TrackListing
 import com.example.task6.databinding.MainFragmentBinding
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -39,6 +40,13 @@ class MainFragment : Fragment() {
             separator = "\n",
             transform = { track -> track.title }
         )
+
+        binding.controls.playButton.setOnClickListener {
+            viewModel.playOrToggleSong(trackListing.getTracks()[0], true)
+        }
+        binding.controls.stopButton.setOnClickListener {
+            viewModel.playOrToggleSong(trackListing.getTracks()[0], false)
+        }
     }
 
     companion object {

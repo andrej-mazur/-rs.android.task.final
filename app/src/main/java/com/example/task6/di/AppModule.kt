@@ -1,10 +1,12 @@
 package com.plcoding.spotifycloneyt.di
 
 import android.content.Context
+import android.content.res.AssetManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.example.task6.R
+import com.example.task6.exoplayer.MusicServiceConnection
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
@@ -17,15 +19,17 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
-    @Provides
     @Singleton
-    fun provideAssetManager(@ApplicationContext context: Context) =
-        context.assets
+    @Provides
+    fun provideMusicServiceConnection(@ApplicationContext context: Context) = MusicServiceConnection(context)
 
     @Provides
     @Singleton
-    fun provideMoshi() =
-        Moshi.Builder().build()
+    fun provideAssetManager(@ApplicationContext context: Context): AssetManager = context.assets
+
+    @Provides
+    @Singleton
+    fun provideMoshi(): Moshi = Moshi.Builder().build()
 
     @Provides
     @Singleton

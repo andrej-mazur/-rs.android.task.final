@@ -37,6 +37,9 @@ class MusicNotificationManager(
         ).apply {
             setSmallIcon(R.drawable.ic_music_24)
             setMediaSessionToken(sessionToken)
+
+            setRewindIncrementMs(0)
+            setFastForwardIncrementMs(0)
         }
     }
 

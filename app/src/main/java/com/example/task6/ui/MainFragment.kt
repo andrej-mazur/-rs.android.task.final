@@ -5,10 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import com.example.task6.data.TrackListing
 import com.example.task6.databinding.MainFragmentBinding
-import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -19,7 +18,7 @@ class MainFragment : Fragment() {
 
     private val binding get() = requireNotNull(_binding)
 
-    private val viewModel: MainViewModel by activityViewModels()
+    lateinit var mainViewModel: MainViewModel
 
     @Inject
     lateinit var trackListing: TrackListing
@@ -36,16 +35,20 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
+
         binding.log.text = trackListing.getTracks().joinToString(
             separator = "\n",
             transform = { track -> track.title }
         )
 
+        val track = trackListing.getTracks()[0];
+
         binding.controls.playButton.setOnClickListener {
-            viewModel.playOrToggleSong(trackListing.getTracks()[0], true)
+            mainViewModel.playOrToggleSong(track, true)
         }
         binding.controls.stopButton.setOnClickListener {
-            viewModel.playOrToggleSong(trackListing.getTracks()[0], false)
+            mainViewModel.playOrToggleSong(track, false)
         }
     }
 

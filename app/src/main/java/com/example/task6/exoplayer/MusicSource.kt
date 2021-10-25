@@ -15,7 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class FirebaseMusicSource @Inject constructor(
+class MusicSource @Inject constructor(
     private val musicDatabase: TrackListing
 ) {
 
@@ -30,7 +30,7 @@ class FirebaseMusicSource @Inject constructor(
                 .putString(METADATA_KEY_ARTIST, track.artist)
                 .putString(METADATA_KEY_TITLE, track.title)
                 .putString(METADATA_KEY_ALBUM_ART_URI, track.bitmapUri)
-                .putString(METADATA_KEY_MEDIA_URI, track.bitmapUri)
+                .putString(METADATA_KEY_MEDIA_URI, track.trackUri)
                 .putString(METADATA_KEY_DISPLAY_TITLE, track.title)
                 .putString(METADATA_KEY_DISPLAY_SUBTITLE, track.artist)
                 .putString(METADATA_KEY_DISPLAY_DESCRIPTION, track.artist)

@@ -36,7 +36,7 @@ object ServiceModule {
     @ServiceScoped
     @Provides
     fun provideDataSourceFactory(@ApplicationContext context: Context) =
-        DefaultDataSourceFactory(context, Util.getUserAgent(context, "Spotify App"))
+        DefaultDataSourceFactory(context, Util.getUserAgent(context, "RSS Task 6 App"))
 }
 
 

@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.RequestManager
 import com.example.task6.R
-import com.example.task6.data.TrackListing
 import com.example.task6.databinding.MainFragmentBinding
 import com.example.task6.exoplayer.extensions.isPlaying
 import com.example.task6.exoplayer.extensions.toTrack
@@ -29,9 +28,6 @@ class MainFragment : Fragment() {
     @Inject
     lateinit var glide: RequestManager
 
-    @Inject
-    lateinit var trackListing: TrackListing
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -45,11 +41,6 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
-
-        binding.log.text = trackListing.getTracks().joinToString(
-            separator = "\n",
-            transform = { track -> track.title }
-        )
 
         mainViewModel.isConnected.observe(viewLifecycleOwner) {
             it?.getContentIfNotHandled()?.let { result ->

@@ -12,7 +12,6 @@ import com.example.task6.data.TrackListing
 import com.example.task6.databinding.MainFragmentBinding
 import com.example.task6.exoplayer.extensions.isPlaying
 import com.example.task6.exoplayer.extensions.toTrack
-import com.example.task6.other.Status
 import com.example.task6.other.Status.ERROR
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint

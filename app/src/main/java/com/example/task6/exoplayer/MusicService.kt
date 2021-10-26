@@ -50,14 +50,14 @@ class MusicService : MediaBrowserServiceCompat() {
 
     var isForegroundService = false
 
-    private var curPlayingSong: MediaMetadataCompat? = null
+    private var currentPlayingTrack: MediaMetadataCompat? = null
 
     private var isPlayerInitialized = false
 
     private lateinit var musicPlayerEventListener: MusicPlayerEventListener
 
     companion object {
-        var curSongDuration = 0L
+        var currentTrackDuration = 0L
             private set
     }
 
@@ -80,12 +80,12 @@ class MusicService : MediaBrowserServiceCompat() {
 
         musicNotificationManager =
             MusicNotificationManager(this, mediaSession.sessionToken, MusicPlayerNotificationListener(this)) {
-                curSongDuration = exoPlayer.duration
+                currentTrackDuration = exoPlayer.duration
             }
 
         val musicPlaybackPreparer = MusicPlaybackPreparer(musicSource) {
-            curPlayingSong = it
-            preparePlayer(musicSource.songs, it, true)
+            currentPlayingTrack = it
+            preparePlayer(musicSource.tracks, it, true)
         }
 
         mediaSessionConnector = MediaSessionConnector(mediaSession)
@@ -100,18 +100,18 @@ class MusicService : MediaBrowserServiceCompat() {
 
     private inner class MusicQueueNavigator : TimelineQueueNavigator(mediaSession) {
         override fun getMediaDescription(player: Player, windowIndex: Int): MediaDescriptionCompat {
-            return musicSource.songs[windowIndex].description
+            return musicSource.tracks[windowIndex].description
         }
     }
 
     private fun preparePlayer(
-        songs: List<MediaMetadataCompat>,
-        itemToPlay: MediaMetadataCompat?,
+        tracks: List<MediaMetadataCompat>,
+        trackToPlay: MediaMetadataCompat?,
         playNow: Boolean
     ) {
-        val curSongIndex = if (curPlayingSong == null) 0 else songs.indexOf(itemToPlay)
+        val currentTrackIndex = if (currentPlayingTrack == null) 0 else tracks.indexOf(trackToPlay)
         exoPlayer.prepare(musicSource.asMediaSource(dataSourceFactory))
-        exoPlayer.seekTo(curSongIndex, 0L)
+        exoPlayer.seekTo(currentTrackIndex, 0L)
         exoPlayer.playWhenReady = playNow
     }
 
@@ -138,8 +138,8 @@ class MusicService : MediaBrowserServiceCompat() {
                 val resultsSent = musicSource.whenReady { isInitialized ->
                     if (isInitialized) {
                         result.sendResult(musicSource.asMediaItems())
-                        if (!isPlayerInitialized && musicSource.songs.isNotEmpty()) {
-                            preparePlayer(musicSource.songs, musicSource.songs[0], false)
+                        if (!isPlayerInitialized && musicSource.tracks.isNotEmpty()) {
+                            preparePlayer(musicSource.tracks, musicSource.tracks[0], false)
                             isPlayerInitialized = true
                         }
                     } else {

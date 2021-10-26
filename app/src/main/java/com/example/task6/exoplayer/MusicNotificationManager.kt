@@ -19,7 +19,7 @@ class MusicNotificationManager(
     private val context: Context,
     sessionToken: MediaSessionCompat.Token,
     notificationListener: PlayerNotificationManager.NotificationListener,
-    private val newSongCallback: () -> Unit
+    private val onNewTrackCallback: () -> Unit
 ) {
 
     private val notificationManager: PlayerNotificationManager
@@ -52,7 +52,7 @@ class MusicNotificationManager(
     ) : PlayerNotificationManager.MediaDescriptionAdapter {
 
         override fun getCurrentContentTitle(player: Player): CharSequence {
-            newSongCallback()
+            onNewTrackCallback()
             return mediaController.metadata.description.title.toString()
         }
 

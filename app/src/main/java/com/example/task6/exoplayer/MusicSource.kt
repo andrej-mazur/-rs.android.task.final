@@ -24,15 +24,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class MusicSource @Inject constructor(
-    private val musicDatabase: TrackListing
+    private val trackListing: TrackListing
 ) {
 
-    var songs = emptyList<MediaMetadataCompat>()
+    var tracks = emptyList<MediaMetadataCompat>()
 
     suspend fun fetchMediaData() = withContext(Dispatchers.IO) {
         state = STATE_INITIALIZING
-        val allSongs = musicDatabase.getTracks()
-        songs = allSongs.map { track ->
+        tracks = trackListing.getTracks().map { track ->
             MediaMetadataCompat.Builder()
                 .putString(METADATA_KEY_MEDIA_ID, track.mediaId)
                 .putString(METADATA_KEY_ARTIST, track.artist)
@@ -47,21 +46,21 @@ class MusicSource @Inject constructor(
 
     fun asMediaSource(dataSourceFactory: DefaultDataSourceFactory): ConcatenatingMediaSource {
         val concatenatingMediaSource = ConcatenatingMediaSource()
-        songs.forEach { song ->
+        tracks.forEach { track ->
             val mediaSource = ProgressiveMediaSource.Factory(dataSourceFactory)
-                .createMediaSource(song.getString(METADATA_KEY_MEDIA_URI).toUri())
+                .createMediaSource(track.getString(METADATA_KEY_MEDIA_URI).toUri())
             concatenatingMediaSource.addMediaSource(mediaSource)
         }
         return concatenatingMediaSource
     }
 
-    fun asMediaItems() = songs.map { song ->
+    fun asMediaItems() = tracks.map { track ->
         val desc = MediaDescriptionCompat.Builder()
-            .setMediaUri(song.getString(METADATA_KEY_MEDIA_URI).toUri())
-            .setTitle(song.description.title)
-            .setSubtitle(song.description.subtitle)
-            .setMediaId(song.description.mediaId)
-            .setIconUri(song.description.iconUri)
+            .setMediaUri(track.getString(METADATA_KEY_MEDIA_URI).toUri())
+            .setTitle(track.description.title)
+            .setSubtitle(track.description.subtitle)
+            .setMediaId(track.description.mediaId)
+            .setIconUri(track.description.iconUri)
             .build()
         MediaBrowserCompat.MediaItem(desc, FLAG_PLAYABLE)
     }.toMutableList()

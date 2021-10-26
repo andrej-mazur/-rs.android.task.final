@@ -16,18 +16,18 @@ class MainViewModel @Inject constructor(
 
     val isConnected = musicServiceConnection.isConnected
     val networkError = musicServiceConnection.networkError
-    val curPlayingSong = musicServiceConnection.curPlayingSong
-    val playbackState = musicServiceConnection.playbackState
+    val currentPlayingTrack = musicServiceConnection.currentPlayingTrack
+    val currentPlaybackState = musicServiceConnection.currentPlaybackState
 
     init {
         musicServiceConnection.subscribe(MEDIA_ROOT_ID, object : MediaBrowserCompat.SubscriptionCallback() {})
     }
 
-    fun skipToNextSong() {
+    fun skipToNextTrack() {
         musicServiceConnection.transportControls.skipToNext()
     }
 
-    fun skipToPreviousSong() {
+    fun skipToPreviousTrack() {
         musicServiceConnection.transportControls.skipToPrevious()
     }
 
@@ -40,7 +40,7 @@ class MainViewModel @Inject constructor(
     }
 
     fun playOrPause() {
-        playbackState.value?.let { playbackState ->
+        currentPlaybackState.value?.let { playbackState ->
             when {
                 playbackState.isPlaying -> pause()
                 playbackState.isPlayEnabled -> play()

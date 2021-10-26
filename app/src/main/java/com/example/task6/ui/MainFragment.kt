@@ -73,7 +73,7 @@ class MainFragment : Fragment() {
             }
         }
 
-        mainViewModel.playbackState.observe(viewLifecycleOwner) { playbackState ->
+        mainViewModel.currentPlaybackState.observe(viewLifecycleOwner) { playbackState ->
             val playbackStateImage = if (playbackState?.isPlaying == true)
                 R.drawable.ic_pause_24
             else
@@ -83,7 +83,7 @@ class MainFragment : Fragment() {
             }
         }
 
-        mainViewModel.curPlayingSong.observe(viewLifecycleOwner) { mediaMetadata ->
+        mainViewModel.currentPlayingTrack.observe(viewLifecycleOwner) { mediaMetadata ->
             if (mediaMetadata == null) return@observe
             val track = mediaMetadata.toTrack()
             if (track != null) {
@@ -97,11 +97,11 @@ class MainFragment : Fragment() {
         }
 
         binding.controls.nextButton.setOnClickListener {
-            mainViewModel.skipToNextSong()
+            mainViewModel.skipToNextTrack()
         }
 
         binding.controls.prevButton.setOnClickListener {
-            mainViewModel.skipToPreviousSong()
+            mainViewModel.skipToPreviousTrack()
         }
     }
 

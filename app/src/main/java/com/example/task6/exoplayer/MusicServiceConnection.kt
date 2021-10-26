@@ -23,11 +23,11 @@ class MusicServiceConnection(
     private val _networkError = MutableLiveData<Event<Resource<Boolean>>>()
     val networkError: LiveData<Event<Resource<Boolean>>> = _networkError
 
-    private val _playbackState = MutableLiveData<PlaybackStateCompat?>()
-    val playbackState: LiveData<PlaybackStateCompat?> = _playbackState
+    private val _currentPlaybackState = MutableLiveData<PlaybackStateCompat?>()
+    val currentPlaybackState: LiveData<PlaybackStateCompat?> = _currentPlaybackState
 
-    private val _curPlayingSong = MutableLiveData<MediaMetadataCompat?>()
-    val curPlayingSong: LiveData<MediaMetadataCompat?> = _curPlayingSong
+    private val _currentPlayingTrack = MutableLiveData<MediaMetadataCompat?>()
+    val currentPlayingTrack: LiveData<MediaMetadataCompat?> = _currentPlayingTrack
 
     lateinit var mediaController: MediaControllerCompat
 
@@ -91,11 +91,11 @@ class MusicServiceConnection(
     private inner class MediaContollerCallback : MediaControllerCompat.Callback() {
 
         override fun onPlaybackStateChanged(state: PlaybackStateCompat?) {
-            _playbackState.postValue(state)
+            _currentPlaybackState.postValue(state)
         }
 
         override fun onMetadataChanged(metadata: MediaMetadataCompat?) {
-            _curPlayingSong.postValue(metadata)
+            _currentPlayingTrack.postValue(metadata)
         }
 
         override fun onSessionEvent(event: String?, extras: Bundle?) {

@@ -6,8 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.RequestManager
+import com.example.task6.R
 import com.example.task6.data.TrackListing
 import com.example.task6.databinding.MainFragmentBinding
+import com.example.task6.exoplayer.extensions.isPlaying
+import com.example.task6.exoplayer.extensions.toTrack
+import com.example.task6.other.Status
+import com.example.task6.other.Status.ERROR
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -19,6 +26,9 @@ class MainFragment : Fragment() {
     private val binding get() = requireNotNull(_binding)
 
     lateinit var mainViewModel: MainViewModel
+
+    @Inject
+    lateinit var glide: RequestManager
 
     @Inject
     lateinit var trackListing: TrackListing
@@ -42,13 +52,50 @@ class MainFragment : Fragment() {
             transform = { track -> track.title }
         )
 
-        val track = trackListing.getTracks()[0];
-
-        binding.controls.playButton.setOnClickListener {
-            mainViewModel.playOrToggleSong(track, true)
+        mainViewModel.isConnected.observe(viewLifecycleOwner) {
+            it?.getContentIfNotHandled()?.let { result ->
+                when (result.status) {
+                    ERROR -> Snackbar.make(binding.root, result.message ?: "An unknown error occurred", Snackbar.LENGTH_LONG).show()
+                    else -> Unit
+                }
+            }
         }
-        binding.controls.stopButton.setOnClickListener {
-            mainViewModel.playOrToggleSong(track, false)
+
+        mainViewModel.networkError.observe(viewLifecycleOwner) {
+            it?.getContentIfNotHandled()?.let { result ->
+                when (result.status) {
+                    ERROR -> Snackbar.make(binding.root, result.message ?: "An unknown error occurred", Snackbar.LENGTH_LONG).show()
+                    else -> Unit
+                }
+            }
+        }
+
+        mainViewModel.playbackState.observe(viewLifecycleOwner) { playbackState ->
+            val playbackStateImage = if (playbackState?.isPlaying == true) R.drawable.ic_pause_24 else R.drawable.ic_play_24
+            with(binding) {
+                controls.playOrPauseButton.setImageResource(playbackStateImage)
+            }
+        }
+
+        mainViewModel.curPlayingSong.observe(viewLifecycleOwner) { mediaMetadata ->
+            if (mediaMetadata == null) return@observe
+            val track = mediaMetadata.toTrack()
+            if (track != null) {
+                glide.load(track.bitmapUri).into(binding.image)
+                binding.title.text = "${track.artist} - ${track.title}"
+            }
+        }
+
+        binding.controls.playOrPauseButton.setOnClickListener {
+            mainViewModel.playOrPause()
+        }
+
+        binding.controls.nextButton.setOnClickListener {
+            mainViewModel.skipToNextSong()
+        }
+
+        binding.controls.prevButton.setOnClickListener {
+            mainViewModel.skipToPreviousSong()
         }
     }
 

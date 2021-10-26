@@ -31,10 +31,6 @@ class MusicSource @Inject constructor(
                 .putString(METADATA_KEY_TITLE, track.title)
                 .putString(METADATA_KEY_ALBUM_ART_URI, track.bitmapUri)
                 .putString(METADATA_KEY_MEDIA_URI, track.trackUri)
-                .putString(METADATA_KEY_DISPLAY_TITLE, track.title)
-                .putString(METADATA_KEY_DISPLAY_SUBTITLE, track.artist)
-                .putString(METADATA_KEY_DISPLAY_DESCRIPTION, track.artist)
-                .putString(METADATA_KEY_DISPLAY_ICON_URI, track.bitmapUri)
                 .putLong(METADATA_KEY_DURATION, track.duration)
                 .build()
         }

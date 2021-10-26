@@ -2,8 +2,7 @@ package com.example.task6.other
 
 open class Event<out T>(private val data: T) {
 
-    var hasBeenHandled = false
-        private set
+    private var hasBeenHandled = false
 
     fun getContentIfNotHandled(): T? {
         return if (hasBeenHandled) {
@@ -13,6 +12,4 @@ open class Event<out T>(private val data: T) {
             data
         }
     }
-
-    fun peekContent() = data
 }

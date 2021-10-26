@@ -102,7 +102,7 @@ class MusicServiceConnection(
             super.onSessionEvent(event, extras)
             when (event) {
                 NETWORK_ERROR -> _networkError.postValue(
-                    Event(Resource.error("Couldn't connect to the server. Please check your internet connection.", null))
+                    Event(Resource.error("Couldn't connect to the server. Please check your internet connection."))
                 )
             }
         }

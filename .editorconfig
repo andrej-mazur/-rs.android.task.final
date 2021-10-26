@@ -13,10 +13,7 @@ ij_kotlin_name_count_to_use_star_import = 999
 ij_kotlin_name_count_to_use_star_import_for_members = 999
 ij_kotlin_spaces_around_equality_operators = true
 indent_size = 4
-max_line_length = off
-
-[*.groovy]
-indent_size = 4
+max_line_length = 140
 
 [*.java]
 indent_size = 4

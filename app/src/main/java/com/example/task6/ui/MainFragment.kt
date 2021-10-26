@@ -24,7 +24,7 @@ class MainFragment : Fragment() {
 
     private val binding get() = requireNotNull(_binding)
 
-    lateinit var mainViewModel: MainViewModel
+    private lateinit var mainViewModel: MainViewModel
 
     @Inject
     lateinit var glide: RequestManager
@@ -54,7 +54,9 @@ class MainFragment : Fragment() {
         mainViewModel.isConnected.observe(viewLifecycleOwner) {
             it?.getContentIfNotHandled()?.let { result ->
                 when (result.status) {
-                    ERROR -> Snackbar.make(binding.root, result.message ?: "An unknown error occurred", Snackbar.LENGTH_LONG).show()
+                    ERROR -> Snackbar
+                        .make(binding.root, result.message ?: "An unknown error occurred", Snackbar.LENGTH_LONG)
+                        .show()
                     else -> Unit
                 }
             }
@@ -63,14 +65,19 @@ class MainFragment : Fragment() {
         mainViewModel.networkError.observe(viewLifecycleOwner) {
             it?.getContentIfNotHandled()?.let { result ->
                 when (result.status) {
-                    ERROR -> Snackbar.make(binding.root, result.message ?: "An unknown error occurred", Snackbar.LENGTH_LONG).show()
+                    ERROR -> Snackbar
+                        .make(binding.root, result.message ?: "An unknown error occurred", Snackbar.LENGTH_LONG)
+                        .show()
                     else -> Unit
                 }
             }
         }
 
         mainViewModel.playbackState.observe(viewLifecycleOwner) { playbackState ->
-            val playbackStateImage = if (playbackState?.isPlaying == true) R.drawable.ic_pause_24 else R.drawable.ic_play_24
+            val playbackStateImage = if (playbackState?.isPlaying == true)
+                R.drawable.ic_pause_24
+            else
+                R.drawable.ic_play_24
             with(binding) {
                 controls.playOrPauseButton.setImageResource(playbackStateImage)
             }
@@ -81,7 +88,7 @@ class MainFragment : Fragment() {
             val track = mediaMetadata.toTrack()
             if (track != null) {
                 glide.load(track.bitmapUri).into(binding.image)
-                binding.title.text = "${track.artist} - ${track.title}"
+                binding.title.text = getString(R.string.player_title, track.artist, track.title)
             }
         }
 

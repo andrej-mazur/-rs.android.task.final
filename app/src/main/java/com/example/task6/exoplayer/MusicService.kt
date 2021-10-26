@@ -68,7 +68,7 @@ class MusicService : MediaBrowserServiceCompat() {
         }
 
         val activityIntent = packageManager?.getLaunchIntentForPackage(packageName)?.let {
-            PendingIntent.getActivity(this, 0, it, 0)
+            PendingIntent.getActivity(this, 0, it, PendingIntent.FLAG_IMMUTABLE)
         }
 
         mediaSession = MediaSessionCompat(this, SERVICE_TAG).apply {
@@ -78,9 +78,10 @@ class MusicService : MediaBrowserServiceCompat() {
 
         sessionToken = mediaSession.sessionToken
 
-        musicNotificationManager = MusicNotificationManager(this, mediaSession.sessionToken, MusicPlayerNotificationListener(this)) {
-            curSongDuration = exoPlayer.duration
-        }
+        musicNotificationManager =
+            MusicNotificationManager(this, mediaSession.sessionToken, MusicPlayerNotificationListener(this)) {
+                curSongDuration = exoPlayer.duration
+            }
 
         val musicPlaybackPreparer = MusicPlaybackPreparer(musicSource) {
             curPlayingSong = it
@@ -127,7 +128,7 @@ class MusicService : MediaBrowserServiceCompat() {
         exoPlayer.release()
     }
 
-    override fun onGetRoot(clientPackageName: String, clientUid: Int, rootHints: Bundle?): BrowserRoot? {
+    override fun onGetRoot(clientPackageName: String, clientUid: Int, rootHints: Bundle?): BrowserRoot {
         return BrowserRoot(MEDIA_ROOT_ID, null)
     }
 

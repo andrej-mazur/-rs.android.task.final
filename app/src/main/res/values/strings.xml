@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">Task6</string>
+
     <string name="notification_channel_name">Music Channel</string>
     <string name="notification_channel_description">Shows the currently playing music</string>
+
+    <string name="player_title">%1$s - %2$s</string>
 </resources>

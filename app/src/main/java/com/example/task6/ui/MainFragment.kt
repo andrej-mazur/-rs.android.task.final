@@ -26,7 +26,7 @@ class MainFragment : Fragment() {
     private lateinit var mainViewModel: MainViewModel
 
     @Inject
-    lateinit var glide: RequestManager
+    lateinit var glideRequestManager: RequestManager
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -78,7 +78,7 @@ class MainFragment : Fragment() {
             if (mediaMetadata == null) return@observe
             val track = mediaMetadata.toTrack()
             if (track != null) {
-                glide.load(track.bitmapUri).into(binding.image)
+                glideRequestManager.load(track.bitmapUri).into(binding.image)
                 binding.title.text = getString(R.string.player_title, track.artist, track.title)
             }
         }
@@ -96,7 +96,8 @@ class MainFragment : Fragment() {
         }
     }
 
-    companion object {
-        fun instance() = MainFragment()
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

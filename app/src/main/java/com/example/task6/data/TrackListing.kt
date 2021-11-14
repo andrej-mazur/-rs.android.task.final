@@ -9,7 +9,5 @@ class TrackListing @Inject constructor(
 ) {
 
     private var _tracks: List<Track>? = trackLoader.load()
-    private val tracks: List<Track> = requireNotNull(_tracks)
-
-    fun getTracks(): List<Track> = tracks
+    val tracks: List<Track> = requireNotNull(_tracks)
 }

@@ -31,7 +31,7 @@ class MusicSource @Inject constructor(
 
     suspend fun fetchMediaData() = withContext(Dispatchers.IO) {
         state = STATE_INITIALIZING
-        tracks = trackListing.getTracks().map { track ->
+        tracks = trackListing.tracks.map { track ->
             MediaMetadataCompat.Builder()
                 .putString(METADATA_KEY_MEDIA_ID, track.mediaId)
                 .putString(METADATA_KEY_ARTIST, track.artist)

@@ -11,7 +11,8 @@
         android:layout_height="@dimen/control_button_size"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/ic_prev_24" />
+        android:src="@drawable/ic_prev_24"
+        android:contentDescription="@string/description_previous_track"/>
 
     <ImageButton
         android:id="@+id/play_or_pause_button"
@@ -19,7 +20,8 @@
         android:layout_height="@dimen/control_button_size"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/ic_play_24" />
+        android:src="@drawable/ic_play_24"
+        android:contentDescription="@string/description_play_or_pause_track"/>
 
     <ImageButton
         android:id="@+id/next_button"
@@ -27,5 +29,6 @@
         android:layout_height="@dimen/control_button_size"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/ic_next_24" />
+        android:src="@drawable/ic_next_24"
+        android:contentDescription="@string/description_next_track"/>
 </LinearLayout>

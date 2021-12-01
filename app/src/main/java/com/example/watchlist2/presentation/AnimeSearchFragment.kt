@@ -60,7 +60,7 @@ class AnimeSearchFragment : Fragment() {
                             Toast.makeText(context, uiState.message, Toast.LENGTH_SHORT).show()
                         }
                         is Resource.Loading -> {
-                            Toast.makeText(context, "LOADING", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Loading...", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }

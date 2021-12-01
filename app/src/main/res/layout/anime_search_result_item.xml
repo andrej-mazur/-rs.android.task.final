@@ -54,23 +54,6 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="9.99" />
 
-
-        <!--        app:layout_constraintStart_toStartOf="@id/vertical_guideline"-->
-
-        <!--        <androidx.constraintlayout.widget.Guideline-->
-        <!--            android:id="@+id/vertical_guideline"-->
-        <!--            android:layout_width="0dp"-->
-        <!--            android:layout_height="0dp"-->
-        <!--            android:orientation="vertical"-->
-        <!--            app:layout_constraintGuide_percent="0.30" />-->
-
-        <!--        <androidx.constraintlayout.widget.Guideline-->
-        <!--            android:id="@+id/vertical_guideline"-->
-        <!--            android:layout_width="0dp"-->
-        <!--            android:layout_height="0dp"-->
-        <!--            android:orientation="vertical"-->
-        <!--            app:layout_constraintGuide_percent="0.80" />-->
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.card.MaterialCardView>

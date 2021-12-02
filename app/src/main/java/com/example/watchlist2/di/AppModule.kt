@@ -1,13 +1,18 @@
 package com.example.watchlist2.di
 
+import android.content.Context
+import android.content.SharedPreferences
+import androidx.preference.PreferenceManager
 import com.example.watchlist2.common.Constants.BASE_URL
 import com.example.watchlist2.data.remote.JikanApi
 import com.example.watchlist2.data.remote.interceptor.RateLimiterInterceptor
 import com.example.watchlist2.data.repository.AnimeRepository
 import com.example.watchlist2.data.repository.AnimeRepositoryImpl
+import com.example.watchlist2.util.PreferencesWrapper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -36,5 +41,17 @@ object AppModule {
     @Singleton
     fun provideAnimeRepository(api: JikanApi): AnimeRepository {
         return AnimeRepositoryImpl(api)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+    }
+
+    @Provides
+    @Singleton
+    fun providePreferencesWrapper(sharedPreferences: SharedPreferences): PreferencesWrapper {
+        return PreferencesWrapper(sharedPreferences)
     }
 }

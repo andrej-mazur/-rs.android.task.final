@@ -37,7 +37,7 @@ class AnimeSearchFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAnimeSearchBinding.inflate(inflater, container, false)
-        setToolbarTitle(R.string.app_name)
+        setToolbarTitle(R.string.search)
         return binding.root
     }
 

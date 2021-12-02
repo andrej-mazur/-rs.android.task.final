@@ -17,7 +17,7 @@ class AnimeSearchResultListViewModel @Inject constructor(
     private val searchAnimeUseCase: SearchAnimeUseCase
 ) : ViewModel() {
 
-    private val _uiState:MutableStateFlow<Resource<List<AnimeSearchResult>>> = MutableStateFlow(Resource.Loading())
+    private val _uiState: MutableStateFlow<Resource<List<AnimeSearchResult>>> = MutableStateFlow(Resource.Loading())
     val uiState: StateFlow<Resource<List<AnimeSearchResult>>> = _uiState
 
     init {
@@ -25,8 +25,8 @@ class AnimeSearchResultListViewModel @Inject constructor(
     }
 
     private fun searchAnime(query: String) {
-        searchAnimeUseCase(query).onEach { result ->
-            _uiState.value = result
-        }.launchIn(viewModelScope)
+        searchAnimeUseCase(query)
+            .onEach { result -> _uiState.value = result }
+            .launchIn(viewModelScope)
     }
 }

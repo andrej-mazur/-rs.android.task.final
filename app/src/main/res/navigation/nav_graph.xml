@@ -3,26 +3,32 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/first_fragment">
 
     <fragment
-        android:id="@+id/FirstFragment"
+        android:id="@+id/first_fragment"
         android:name="com.example.watchlist2.presentation.AnimeSearchFragment"
-        android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_anime_search">
 
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            app:destination="@id/second_fragment" />
     </fragment>
     <fragment
-        android:id="@+id/SecondFragment"
+        android:id="@+id/second_fragment"
         android:name="com.example.watchlist2.presentation.AnimeDetailsFragment"
-        android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_anime_details">
 
         <action
             android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
+            app:destination="@id/first_fragment" />
     </fragment>
+    <fragment
+        android:id="@+id/preferences_fragment"
+        android:name="com.example.watchlist2.presentation.PreferencesFragment" />
+
+    <action
+        android:id="@+id/action_to_PreferencesFragment"
+        app:destination="@id/preferences_fragment" />
+
 </navigation>

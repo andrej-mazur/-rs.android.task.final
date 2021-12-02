@@ -16,28 +16,28 @@ class AnimeDetailsViewModel @Inject constructor(
     private val getAnimeDetailsUseCase: GetAnimeDetailsUseCase
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(AnimeDetailsState())
-    val state: StateFlow<AnimeDetailsState> = _state
+    private val _uiState = MutableStateFlow(AnimeDetailsState())
+    val uiState: StateFlow<AnimeDetailsState> = _uiState
 
     init {
         getAnimeDetails("820")
     }
 
     private fun getAnimeDetails(id: String) {
-        getAnimeDetailsUseCase(id).onEach { result ->
-            when (result) {
-                is Resource.Success -> {
-                    _state.value = AnimeDetailsState(anime = result.data)
-                }
-                is Resource.Error -> {
-                    _state.value = AnimeDetailsState(
-                        error = result.message ?: "An unexpected error occurred"
-                    )
-                }
-                is Resource.Loading -> {
-                    _state.value = AnimeDetailsState(isLoading = true)
+        getAnimeDetailsUseCase(id)
+            .onEach { result ->
+                when (result) {
+                    is Resource.Success -> {
+                        _uiState.value = AnimeDetailsState(anime = result.data)
+                    }
+                    is Resource.Error -> {
+                        _uiState.value = AnimeDetailsState(error = result.message ?: "An unexpected error occurred")
+                    }
+                    is Resource.Loading -> {
+                        _uiState.value = AnimeDetailsState(isLoading = true)
+                    }
                 }
             }
-        }.launchIn(viewModelScope)
+            .launchIn(viewModelScope)
     }
 }

@@ -1,4 +1,4 @@
-package com.example.watchlist2.presentation.state
+package com.example.watchlist2.presentation.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 @HiltViewModel
-class AnimeSearchResultListViewModel @Inject constructor(
+class AnimeSearchViewModel @Inject constructor(
     private val searchAnimeUseCase: SearchAnimeUseCase
 ) : ViewModel() {
 

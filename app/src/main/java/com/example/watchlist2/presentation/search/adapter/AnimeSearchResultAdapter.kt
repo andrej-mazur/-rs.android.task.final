@@ -1,4 +1,4 @@
-package com.example.watchlist2.presentation.adapter
+package com.example.watchlist2.presentation.search.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.example.watchlist2.R
 import com.example.watchlist2.databinding.AnimeSearchResultItemBinding
 import com.example.watchlist2.domain.model.AnimeSearchResult
 

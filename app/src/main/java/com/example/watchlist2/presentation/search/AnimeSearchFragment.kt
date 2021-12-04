@@ -1,4 +1,4 @@
-package com.example.watchlist2.presentation
+package com.example.watchlist2.presentation.search
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,9 +13,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.watchlist2.R
 import com.example.watchlist2.databinding.FragmentAnimeSearchBinding
-import com.example.watchlist2.presentation.adapter.AnimeSearchResultAdapter
-import com.example.watchlist2.presentation.extension.setToolbarTitle
-import com.example.watchlist2.presentation.state.AnimeSearchResultListViewModel
+import com.example.watchlist2.presentation.search.adapter.AnimeSearchResultAdapter
+import com.example.watchlist2.extension.setToolbarTitle
 import com.plcoding.cryptocurrencyappyt.common.Resource
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -30,7 +29,7 @@ class AnimeSearchFragment : Fragment() {
 
     private val animeSearchResultAdapter = AnimeSearchResultAdapter()
 
-    private val animeSearchResultListViewModel: AnimeSearchResultListViewModel by viewModels()
+    private val animeSearchViewModel: AnimeSearchViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,7 +50,7 @@ class AnimeSearchFragment : Fragment() {
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                animeSearchResultListViewModel.uiState.collect { uiState ->
+                animeSearchViewModel.uiState.collect { uiState ->
                     when (uiState) {
                         is Resource.Success -> {
                             animeSearchResultAdapter.submitList(uiState.data)

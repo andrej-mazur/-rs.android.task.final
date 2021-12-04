@@ -1,4 +1,4 @@
-package com.example.watchlist2.presentation
+package com.example.watchlist2.presentation.preferences
 
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.preference.PreferenceFragmentCompat
 import com.example.watchlist2.R
-import com.example.watchlist2.presentation.extension.setToolbarTitle
+import com.example.watchlist2.extension.setToolbarTitle
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

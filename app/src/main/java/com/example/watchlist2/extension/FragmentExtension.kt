@@ -1,4 +1,4 @@
-package com.example.watchlist2.presentation.extension
+package com.example.watchlist2.extension
 
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment

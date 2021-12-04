@@ -1,4 +1,4 @@
-package com.example.watchlist2.presentation
+package com.example.watchlist2.presentation.details
 
 import android.os.Bundle
 import android.view.LayoutInflater

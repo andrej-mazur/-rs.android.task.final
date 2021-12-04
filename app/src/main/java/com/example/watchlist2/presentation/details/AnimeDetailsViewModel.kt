@@ -1,4 +1,4 @@
-package com.example.watchlist2.presentation.state
+package com.example.watchlist2.presentation.details
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

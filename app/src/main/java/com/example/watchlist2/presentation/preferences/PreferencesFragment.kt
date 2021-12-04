@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.preference.PreferenceFragmentCompat
 import com.example.watchlist2.R
 import com.example.watchlist2.extension.setToolbarTitle
+import com.example.watchlist2.util.Preferences
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -15,32 +16,32 @@ import javax.inject.Inject
 class PreferencesFragment : PreferenceFragmentCompat() {
 
     @Inject
-    lateinit var sharedPreferences: SharedPreferences
+    lateinit var preferences: Preferences
 
     private val listener = SharedPreferences.OnSharedPreferenceChangeListener { _: SharedPreferences, key: String ->
-        if (key == "pref_dark_mode") {
+        if (preferences.isPrefDarkModeKey(key)) {
             activity?.recreate()
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = super.onCreateView(inflater, container, savedInstanceState)
-        setToolbarTitle(R.string.settings)
+        setToolbarTitle(R.string.preferences)
         return view
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-        setPreferencesFromResource(R.xml.settings, rootKey)
+        setPreferencesFromResource(R.xml.preferences, rootKey)
     }
 
     override fun onStart() {
         super.onStart()
-        sharedPreferences.registerOnSharedPreferenceChangeListener(listener)
+        preferences.registerOnSharedPreferenceChangeListener(listener)
 
     }
 
     override fun onStop() {
-        sharedPreferences.unregisterOnSharedPreferenceChangeListener(listener)
+        preferences.unregisterOnSharedPreferenceChangeListener(listener)
         super.onStop()
     }
 }

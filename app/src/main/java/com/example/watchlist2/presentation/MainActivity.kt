@@ -12,7 +12,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.watchlist2.R
 import com.example.watchlist2.databinding.ActivityMainBinding
-import com.example.watchlist2.util.PreferencesWrapper
+import com.example.watchlist2.util.Preferences
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,8 +34,8 @@ class MainActivity : AppCompatActivity() {
 
     @EntryPoint
     @InstallIn(SingletonComponent::class)
-    interface SharedPreferencesWrapperFactory {
-        fun getSharedPreferencesWrapper(): PreferencesWrapper
+    interface PreferencesFactory {
+        fun getPreferences(): Preferences
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,13 +51,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initTheme() {
-        val sharedPreferencesWrapperFactory = EntryPointAccessors.fromApplication(this, SharedPreferencesWrapperFactory::class.java)
-        val sharedPreferencesWrapper = sharedPreferencesWrapperFactory.getSharedPreferencesWrapper()
-        sharedPreferencesWrapper.getPrefDarkMode().let {
-            when (it) {
-                "ON" -> setTheme(R.style.AppThemeDark)
-                else -> setTheme(R.style.AppTheme)
-            }
+        val preferencesFactory = EntryPointAccessors.fromApplication(this, PreferencesFactory::class.java)
+        val preferences = preferencesFactory.getPreferences()
+        if (preferences.isPrefDarkModeOn()) {
+            setTheme(R.style.AppThemeDark)
+        } else {
+            setTheme(R.style.AppTheme)
         }
     }
 

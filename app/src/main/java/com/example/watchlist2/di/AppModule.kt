@@ -8,7 +8,7 @@ import com.example.watchlist2.data.remote.JikanApi
 import com.example.watchlist2.data.remote.interceptor.RateLimiterInterceptor
 import com.example.watchlist2.data.repository.AnimeRepository
 import com.example.watchlist2.data.repository.AnimeRepositoryImpl
-import com.example.watchlist2.util.PreferencesWrapper
+import com.example.watchlist2.util.Preferences
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -57,7 +57,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providePreferencesWrapper(sharedPreferences: SharedPreferences): PreferencesWrapper {
-        return PreferencesWrapper(sharedPreferences)
+    fun providePreferences(sharedPreferences: SharedPreferences): Preferences {
+        return Preferences(sharedPreferences)
     }
 }

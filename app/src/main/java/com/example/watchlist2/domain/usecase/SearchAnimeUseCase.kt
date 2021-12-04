@@ -4,8 +4,10 @@ import com.example.watchlist2.data.remote.extension.toAnimeSearchResultList
 import com.example.watchlist2.data.repository.AnimeRepository
 import com.example.watchlist2.domain.model.AnimeSearchResult
 import com.plcoding.cryptocurrencyappyt.common.Resource
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
@@ -18,12 +20,12 @@ class SearchAnimeUseCase @Inject constructor(
             emit(Resource.Loading())
             val animeSearchResultList = repository.searchAnime(query).toAnimeSearchResultList()
             emit(Resource.Success(animeSearchResultList))
-        } catch(e: HttpException) {
+        } catch (e: HttpException) {
             emit(Resource.Error(e.localizedMessage ?: "An unexpected error occurred"))
-        } catch(e: IOException) {
+        } catch (e: IOException) {
             emit(Resource.Error("Couldn't reach server. Check your internet connection."))
         } catch (e: Exception) {
             emit(Resource.Error("Unknown error."))
         }
-    }
+    }.flowOn(Dispatchers.IO)
 }

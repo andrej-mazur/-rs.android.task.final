@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.watchlist2.databinding.AnimeSearchResultItemBinding
 import com.example.watchlist2.domain.model.AnimeSearchResult
-import java.text.DecimalFormat
 
 class AnimeSearchResultAdapter : ListAdapter<AnimeSearchResult, AnimeSearchResultViewHolder>(AnimeSearchResultDiffCallback()) {
 
@@ -30,16 +29,10 @@ class AnimeSearchResultViewHolder(
     private val binding: AnimeSearchResultItemBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    private val df = DecimalFormat("#0.00")
-
     fun bind(animeSearchResult: AnimeSearchResult) {
         with(binding) {
             image.load(animeSearchResult.imageUrl)
-            image.clipToOutline = true
             title.text = animeSearchResult.title
-            if ((animeSearchResult.score ?: 0.0).compareTo(0.0) > 0) {
-                score.text = df.format(animeSearchResult.score)
-            }
         }
     }
 }

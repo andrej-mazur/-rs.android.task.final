@@ -18,7 +18,11 @@ class SearchAnimeUseCase @Inject constructor(
     operator fun invoke(query: String): Flow<Resource<List<AnimeSearchResult>>> = flow {
         try {
             emit(Resource.Loading())
-            val animeSearchResultList = repository.searchAnime(query).toAnimeSearchResultList()
+            val animeSearchResultList = if (query.length > MIN_QUERY_LENGTH) {
+                repository.searchAnime(query).toAnimeSearchResultList()
+            } else {
+                emptyList()
+            }
             emit(Resource.Success(animeSearchResultList))
         } catch (e: HttpException) {
             emit(Resource.Error(e.localizedMessage ?: "An unexpected error occurred"))
@@ -28,4 +32,8 @@ class SearchAnimeUseCase @Inject constructor(
             emit(Resource.Error("Unknown error."))
         }
     }.flowOn(Dispatchers.IO)
+
+    companion object {
+        const val MIN_QUERY_LENGTH = 3
+    }
 }

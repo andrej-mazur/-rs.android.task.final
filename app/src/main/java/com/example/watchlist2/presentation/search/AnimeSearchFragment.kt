@@ -54,14 +54,14 @@ class AnimeSearchFragment : Fragment() {
                     when (uiState) {
                         is Resource.Success -> {
                             animeSearchResultAdapter.submitList(uiState.data)
-                            binding.progressBar.visibility = View.GONE
+                            binding.progress.visibility = View.GONE
                         }
                         is Resource.Error -> {
                             Toast.makeText(context, uiState.message, Toast.LENGTH_SHORT).show()
-                            binding.progressBar.visibility = View.GONE
+                            binding.progress.visibility = View.GONE
                         }
                         is Resource.Loading -> {
-                            binding.progressBar.visibility = View.VISIBLE
+                            binding.progress.visibility = View.VISIBLE
                         }
                     }
                 }

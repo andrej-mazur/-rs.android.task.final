@@ -13,8 +13,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.watchlist2.R
 import com.example.watchlist2.databinding.FragmentAnimeSearchBinding
-import com.example.watchlist2.presentation.search.adapter.AnimeSearchResultAdapter
 import com.example.watchlist2.extension.setToolbarTitle
+import com.example.watchlist2.presentation.search.adapter.AnimeSearchResultAdapter
 import com.plcoding.cryptocurrencyappyt.common.Resource
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -54,12 +54,14 @@ class AnimeSearchFragment : Fragment() {
                     when (uiState) {
                         is Resource.Success -> {
                             animeSearchResultAdapter.submitList(uiState.data)
+                            binding.progressBar.visibility = View.GONE
                         }
                         is Resource.Error -> {
                             Toast.makeText(context, uiState.message, Toast.LENGTH_SHORT).show()
+                            binding.progressBar.visibility = View.GONE
                         }
                         is Resource.Loading -> {
-                            Toast.makeText(context, "Loading...", Toast.LENGTH_SHORT).show()
+                            binding.progressBar.visibility = View.VISIBLE
                         }
                     }
                 }

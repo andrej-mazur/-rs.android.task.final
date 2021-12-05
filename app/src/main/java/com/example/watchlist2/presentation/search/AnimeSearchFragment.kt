@@ -25,7 +25,7 @@ class AnimeSearchFragment : Fragment() {
 
     private var _binding: FragmentAnimeSearchBinding? = null
 
-    private val binding get() = _binding!!
+    private val binding get() = requireNotNull(_binding)
 
     private val animeSearchResultAdapter = AnimeSearchResultAdapter()
 

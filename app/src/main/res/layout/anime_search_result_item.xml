@@ -33,6 +33,8 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:scrollHorizontally="true"
+        android:textAppearance="?attr/textAppearanceTitleMedium"
+        android:textIsSelectable="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/image"

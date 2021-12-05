@@ -18,15 +18,15 @@ class AnimeSearchViewModel @Inject constructor(
     private val _uiState: MutableStateFlow<Resource<List<AnimeSearchResult>>> = MutableStateFlow(Resource.Loading())
     val uiState: StateFlow<Resource<List<AnimeSearchResult>>> = _uiState.asStateFlow()
 
-    private var searchJob: Job? = null
+    private var job: Job? = null
 
     init {
         searchAnime("eureka")
     }
 
-    private fun searchAnime(query: String) {
-        searchJob?.cancel()
-        searchJob = searchAnimeUseCase(query)
+    fun searchAnime(query: String) {
+        job?.cancel()
+        job = searchAnimeUseCase(query)
             .onEach { result -> _uiState.value = result }
             .launchIn(viewModelScope)
     }

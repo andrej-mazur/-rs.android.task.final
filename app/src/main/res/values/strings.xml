@@ -17,4 +17,9 @@
     <string name="on">On</string>
     <string name="off">Off</string>
     <string name="dark_mode">Dark mode</string>
+
+    <!-- details screen -->
+    <string name="details_synopsis">Synopsis</string>
+    <string name="details_background">Background</string>
+    <string name="details_placeholder">...</string>
 </resources>

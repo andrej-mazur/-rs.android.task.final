@@ -2,9 +2,11 @@ package com.example.watchlist2.presentation.details
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.watchlist2.domain.model.AnimeDetails
 import com.example.watchlist2.domain.usecase.GetAnimeDetailsUseCase
 import com.plcoding.cryptocurrencyappyt.common.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
@@ -16,28 +18,15 @@ class AnimeDetailsViewModel @Inject constructor(
     private val getAnimeDetailsUseCase: GetAnimeDetailsUseCase
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(AnimeDetailsState())
-    val uiState: StateFlow<AnimeDetailsState> = _uiState
+    private val _uiState = MutableStateFlow<Resource<AnimeDetails>>(Resource.Loading())
+    val uiState: StateFlow<Resource<AnimeDetails>> = _uiState
 
-    init {
-        getAnimeDetails("820")
-    }
+    private var job: Job? = null
 
-    private fun getAnimeDetails(id: String) {
-        getAnimeDetailsUseCase(id)
-            .onEach { result ->
-                when (result) {
-                    is Resource.Success -> {
-                        _uiState.value = AnimeDetailsState(anime = result.data)
-                    }
-                    is Resource.Error -> {
-                        _uiState.value = AnimeDetailsState(error = result.message ?: "An unexpected error occurred")
-                    }
-                    is Resource.Loading -> {
-                        _uiState.value = AnimeDetailsState(isLoading = true)
-                    }
-                }
-            }
+    fun getAnimeDetails(id: String) {
+        job?.cancel()
+        job = getAnimeDetailsUseCase(id)
+            .onEach { result -> _uiState.value = result }
             .launchIn(viewModelScope)
     }
 }

@@ -4,6 +4,7 @@ buildscript {
     val hiltVersion = "2.38.1"
     val detektVersion = "1.18.0"
     val kotlinVersion = "1.5.31"
+    val navigationVersion = "2.3.3"
 
     repositories {
         google()
@@ -13,6 +14,7 @@ buildscript {
     dependencies {
         classpath("com.android.tools.build:gradle:$gradleVersion")
         classpath("com.google.dagger:hilt-android-gradle-plugin:$hiltVersion")
+        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:$navigationVersion")
         classpath("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$detektVersion")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
     }

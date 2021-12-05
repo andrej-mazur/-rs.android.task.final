@@ -2,12 +2,14 @@ package com.example.watchlist2.presentation.search.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.watchlist2.databinding.AnimeSearchResultItemBinding
 import com.example.watchlist2.domain.model.AnimeSearchResult
+import com.example.watchlist2.presentation.search.AnimeSearchFragmentDirections
 
 class AnimeSearchResultAdapter : ListAdapter<AnimeSearchResult, AnimeSearchResultViewHolder>(AnimeSearchResultDiffCallback()) {
 
@@ -33,6 +35,11 @@ class AnimeSearchResultViewHolder(
         with(binding) {
             image.load(animeSearchResult.imageUrl)
             title.text = animeSearchResult.title
+        }
+
+        itemView.setOnClickListener {
+            val direction = AnimeSearchFragmentDirections.actionSearchToDetails(id = animeSearchResult.id)
+            findNavController(it).navigate(direction)
         }
     }
 }

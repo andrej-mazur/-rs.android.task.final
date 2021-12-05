@@ -3,32 +3,36 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/first_fragment">
+    app:startDestination="@id/anime_search_fragment">
 
     <fragment
-        android:id="@+id/first_fragment"
+        android:id="@+id/anime_search_fragment"
         android:name="com.example.watchlist2.presentation.search.AnimeSearchFragment"
         tools:layout="@layout/fragment_anime_search">
 
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/second_fragment" />
+            android:id="@+id/action_search_to_details"
+            app:destination="@id/anime_details_fragment" />
     </fragment>
     <fragment
-        android:id="@+id/second_fragment"
+        android:id="@+id/anime_details_fragment"
         android:name="com.example.watchlist2.presentation.details.AnimeDetailsFragment"
         tools:layout="@layout/fragment_anime_details">
 
         <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/first_fragment" />
+            android:id="@+id/action_details_to_search"
+            app:destination="@id/anime_search_fragment" />
+
+        <argument
+            android:name="id"
+            app:argType="long" />
     </fragment>
     <fragment
         android:id="@+id/preferences_fragment"
         android:name="com.example.watchlist2.presentation.preferences.PreferencesFragment" />
 
     <action
-        android:id="@+id/action_to_PreferencesFragment"
+        android:id="@+id/action_to_preferences"
         app:destination="@id/preferences_fragment" />
 
 </navigation>

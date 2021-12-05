@@ -12,6 +12,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.watchlist2.R
 import com.example.watchlist2.databinding.ActivityMainBinding
+import com.example.watchlist2.presentation.preferences.PreferencesFragmentDirections
 import com.example.watchlist2.util.Preferences
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
@@ -68,7 +69,8 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_settings -> {
-                findNavController(R.id.nav_host).navigate(R.id.action_to_PreferencesFragment)
+                val direction = PreferencesFragmentDirections.actionToPreferences()
+                findNavController(R.id.nav_host).navigate(direction)
                 true
             }
             else -> super.onOptionsItemSelected(item)

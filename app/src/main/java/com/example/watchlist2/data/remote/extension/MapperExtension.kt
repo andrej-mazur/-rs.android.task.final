@@ -25,9 +25,6 @@ fun AnimeSearchResultsDto.AnimeSearchResultDto.toAnimeSearchResult(): AnimeSearc
         id = malId,
         imageUrl = imageUrl,
         title = title,
-        type = type,
-        episodes = episodes,
-        score = score
     )
 }
 

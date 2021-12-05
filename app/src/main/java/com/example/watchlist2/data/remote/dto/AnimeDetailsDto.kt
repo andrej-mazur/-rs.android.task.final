@@ -13,7 +13,7 @@ data class AnimeDetailsDto(
     @Json(name = "request_cache_expiry")
     val requestCacheExpiry: Int?,
     @Json(name = "mal_id")
-    val malId: Int,
+    val malId: Long,
     @Json(name = "url")
     val url: String?,
     @Json(name = "image_url")

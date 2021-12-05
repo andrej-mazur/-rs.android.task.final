@@ -2,7 +2,7 @@ package com.example.watchlist2.domain.model
 
 
 data class AnimeDetails(
-    val id: Int,
+    val id: Long,
     val imageUrl: String?,
     val title: String,
     val type: String?,

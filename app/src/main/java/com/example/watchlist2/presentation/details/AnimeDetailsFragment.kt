@@ -12,7 +12,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
 import coil.load
+import com.example.watchlist2.R
 import com.example.watchlist2.databinding.FragmentAnimeDetailsBinding
+import com.example.watchlist2.extension.setToolbarTitle
 import com.plcoding.cryptocurrencyappyt.common.Resource
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -34,6 +36,7 @@ class AnimeDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAnimeDetailsBinding.inflate(inflater, container, false)
+        setToolbarTitle(R.string.details)
         return binding.root
     }
 

@@ -1,16 +1,16 @@
 <resources>
-    <string name="app_name">Watchlist</string>
+    <string name="app_name">Watchlist: Anime search</string>
 
     <!-- menu -->
     <string name="action_preferences">Preferences</string>
 
-    <!-- TODO remove -->
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-
-    <!-- screen titles -->
+    <!-- screens -->
     <string name="search">Search</string>
+    <string name="details">Details</string>
     <string name="preferences">Preferences</string>
+    <string name="synopsis">Synopsis</string>
+    <string name="background">Background</string>
+    <string name="placeholder">…</string>
 
     <!-- preferences -->
     <string name="theme_category">Theme</string>
@@ -18,8 +18,4 @@
     <string name="off">Off</string>
     <string name="dark_mode">Dark mode</string>
 
-    <!-- details screen -->
-    <string name="details_synopsis">Synopsis</string>
-    <string name="details_background">Background</string>
-    <string name="details_placeholder">...</string>
 </resources>

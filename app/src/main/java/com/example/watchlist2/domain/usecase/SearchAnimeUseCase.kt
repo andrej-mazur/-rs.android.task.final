@@ -1,9 +1,9 @@
 package com.example.watchlist2.domain.usecase
 
+import com.example.watchlist2.common.Resource
 import com.example.watchlist2.data.remote.extension.toAnimeSearchResultList
 import com.example.watchlist2.data.repository.AnimeRepository
 import com.example.watchlist2.domain.model.AnimeSearchResult
-import com.plcoding.cryptocurrencyappyt.common.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -18,7 +18,7 @@ class SearchAnimeUseCase @Inject constructor(
     operator fun invoke(query: String): Flow<Resource<List<AnimeSearchResult>>> = flow {
         try {
             emit(Resource.Loading())
-            val animeSearchResultList = if (query.length > MIN_QUERY_LENGTH) {
+            val animeSearchResultList = if (query.length >= MIN_QUERY_LENGTH) {
                 repository.searchAnime(query).toAnimeSearchResultList()
             } else {
                 emptyList()

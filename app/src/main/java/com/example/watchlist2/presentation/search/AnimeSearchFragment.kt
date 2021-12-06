@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -12,10 +13,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.watchlist2.R
+import com.example.watchlist2.common.Resource
 import com.example.watchlist2.databinding.FragmentAnimeSearchBinding
 import com.example.watchlist2.extension.setToolbarTitle
 import com.example.watchlist2.presentation.search.adapter.AnimeSearchResultAdapter
-import com.plcoding.cryptocurrencyappyt.common.Resource
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -46,9 +47,10 @@ class AnimeSearchFragment : Fragment() {
         with(binding) {
             movieList.layoutManager = LinearLayoutManager(context)
             movieList.adapter = animeSearchResultAdapter
+            search.doOnTextChanged { text, _, _, _ ->
+                animeSearchViewModel.setCurrentQuery(text.toString())
+            }
         }
-
-        animeSearchViewModel.setCurrentQuery("eureka")
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {

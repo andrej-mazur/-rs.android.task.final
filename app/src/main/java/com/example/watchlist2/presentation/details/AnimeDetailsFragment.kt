@@ -13,9 +13,9 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
 import coil.load
 import com.example.watchlist2.R
+import com.example.watchlist2.common.Resource
 import com.example.watchlist2.databinding.FragmentAnimeDetailsBinding
 import com.example.watchlist2.extension.setToolbarTitle
-import com.plcoding.cryptocurrencyappyt.common.Resource
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch

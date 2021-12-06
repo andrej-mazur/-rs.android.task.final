@@ -4,7 +4,7 @@ buildscript {
     val hiltVersion = "2.38.1"
     val detektVersion = "1.18.0"
     val kotlinVersion = "1.5.31"
-    val navigationVersion = "2.3.3"
+    val navigationVersion = "2.4.0-alpha02"
 
     repositories {
         google()

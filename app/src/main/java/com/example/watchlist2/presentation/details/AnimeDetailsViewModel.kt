@@ -18,8 +18,7 @@ class AnimeDetailsViewModel @Inject constructor(
     private val _currentId = MutableStateFlow<Long?>(null)
     private val currentId: StateFlow<Long?> = _currentId.asStateFlow()
 
-    val uiState: StateFlow<Resource<AnimeDetails>>
-        get() = currentId
+    val uiState: StateFlow<Resource<AnimeDetails>> = currentId
             .filterNotNull()
             .flatMapLatest {
                 getAnimeDetailsUseCase(it)

@@ -68,9 +68,6 @@ class AnimeDetailsFragment : Fragment() {
                         is Resource.Error -> {
                             Toast.makeText(context, uiState.message, Toast.LENGTH_SHORT).show()
                         }
-                        is Resource.Loading -> {
-                            /* nothing */
-                        }
                     }
                 }
             }

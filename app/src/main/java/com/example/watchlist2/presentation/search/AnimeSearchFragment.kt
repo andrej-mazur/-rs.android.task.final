@@ -48,6 +48,8 @@ class AnimeSearchFragment : Fragment() {
             movieList.adapter = animeSearchResultAdapter
         }
 
+        animeSearchViewModel.setCurrentQuery("eureka")
+
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 animeSearchViewModel.uiState.collect { uiState ->

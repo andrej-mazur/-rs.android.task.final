@@ -15,6 +15,6 @@ interface JikanApi {
 
     @GET("/v3/anime/{malId}")
     suspend fun getAnimeDetails(
-        @Path("malId") malId: String
+        @Path("malId") malId: Long
     ): AnimeDetailsDto
 }

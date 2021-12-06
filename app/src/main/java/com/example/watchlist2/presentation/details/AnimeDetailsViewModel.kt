@@ -23,7 +23,7 @@ class AnimeDetailsViewModel @Inject constructor(
 
     private var job: Job? = null
 
-    fun getAnimeDetails(id: String) {
+    fun getAnimeDetails(id: Long) {
         job?.cancel()
         job = getAnimeDetailsUseCase(id)
             .onEach { result -> _uiState.value = result }

@@ -13,7 +13,7 @@ class AnimeRepositoryImpl @Inject constructor(
         return api.searchAnime(query)
     }
 
-    override suspend fun getAnimeDetails(malId: String): AnimeDetailsDto {
+    override suspend fun getAnimeDetails(malId: Long): AnimeDetailsDto {
         return api.getAnimeDetails(malId)
     }
 }

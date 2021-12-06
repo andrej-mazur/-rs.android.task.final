@@ -63,7 +63,7 @@ data class AnimeDetailsDto(
     @JsonClass(generateAdapter = true)
     data class Genre(
         @Json(name = "mal_id")
-        val malId: Int?,
+        val malId: Long?,
         @Json(name = "type")
         val type: String?,
         @Json(name = "name")

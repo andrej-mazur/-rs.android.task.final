@@ -7,5 +7,5 @@ interface AnimeRepository {
 
     suspend fun searchAnime(query: String): AnimeSearchResultsDto
 
-    suspend fun getAnimeDetails(malId: String): AnimeDetailsDto
+    suspend fun getAnimeDetails(malId: Long): AnimeDetailsDto
 }

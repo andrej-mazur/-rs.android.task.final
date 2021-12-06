@@ -40,7 +40,7 @@ class AnimeDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        animeDetailsViewModel.getAnimeDetails(args.id)
+        animeDetailsViewModel.setCurrentId(args.id)
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {

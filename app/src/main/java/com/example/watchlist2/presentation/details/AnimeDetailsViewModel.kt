@@ -6,11 +6,8 @@ import com.example.watchlist2.domain.model.AnimeDetails
 import com.example.watchlist2.domain.usecase.GetAnimeDetailsUseCase
 import com.plcoding.cryptocurrencyappyt.common.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -18,15 +15,18 @@ class AnimeDetailsViewModel @Inject constructor(
     private val getAnimeDetailsUseCase: GetAnimeDetailsUseCase
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow<Resource<AnimeDetails>>(Resource.Loading())
-    val uiState: StateFlow<Resource<AnimeDetails>> = _uiState
+    private val _currentId = MutableStateFlow<Long?>(null)
+    private val currentId: StateFlow<Long?> = _currentId.asStateFlow()
 
-    private var job: Job? = null
+    val uiState: StateFlow<Resource<AnimeDetails>>
+        get() = currentId
+            .filterNotNull()
+            .flatMapLatest {
+                getAnimeDetailsUseCase(it)
+            }
+            .stateIn(viewModelScope, SharingStarted.Lazily, Resource.Loading())
 
-    fun getAnimeDetails(id: Long) {
-        job?.cancel()
-        job = getAnimeDetailsUseCase(id)
-            .onEach { result -> _uiState.value = result }
-            .launchIn(viewModelScope)
+    fun setCurrentId(id: Long) {
+        _currentId.value = id
     }
 }

@@ -8,7 +8,7 @@ buildscript {
 
     repositories {
         google()
-        jcenter() /* TODO remove*/
+        mavenCentral()
     }
 
     dependencies {

@@ -3,13 +3,13 @@ package com.example.watchlist2.domain.model
 
 data class AnimeDetails(
     val id: Long,
-    val imageUrl: String?,
     val title: String,
-    val type: String?,
-    val episodes: Int?,
-    val score: Double?,
-    val rank: Int?,
-    val synopsis: String?,
-    val background: String?,
-    val genres: List<String>,
+    val imageUrl: String? = null,
+    val type: String? = null,
+    val episodes: Int? = null,
+    val score: Double? = null,
+    val rank: Int? = null,
+    val synopsis: String? = null,
+    val background: String? = null,
+    val genres: List<String>? = null,
 )

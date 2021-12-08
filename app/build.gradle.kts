@@ -69,7 +69,8 @@ tasks.withType<Detekt>().configureEach {
 
 tasks.withType<KotlinCompile>().configureEach {
     kotlinOptions.freeCompilerArgs = listOf(
-        "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
+        "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
+        "-Xopt-in=kotlinx.coroutines.FlowPreview"
     )
 }
 
@@ -100,5 +101,7 @@ dependencies {
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+    testImplementation("app.cash.turbine:turbine:0.7.0")
+    testImplementation("io.mockk:mockk:1.12.1")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.2")
 }
